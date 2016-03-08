@@ -433,7 +433,29 @@ func verifyPlatformContainerSettings(daemon *Daemon, hostConfig *containertypes.
 			return warnings, fmt.Errorf("cgroup-parent for systemd cgroup should be a valid slice named as \"xxx.slice\"")
 		}
 	}
+
+	if hostConfig.flDuneMode {
+		if !verifyHardwareVirtualization() {
+			warnings = append(warnings, "this hardware is not support the hardware virtualization")
+		}
+
+	}
+
 	return warnings, nil
+}
+
+func verifyHardwareVirtualization() bool {
+	//Checking for x86_64 Linux...
+
+	//Checking for VT-x (w/ EPT and VPID)..."
+
+	//Checking kernel version (3.0 or later)..."
+
+	//Checking for kernel headers..."
+
+	//Checking for syscall table location..."
+
+	return true
 }
 
 // verifyDaemonSettings performs validation of daemon config struct
