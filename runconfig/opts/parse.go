@@ -93,6 +93,9 @@ func Parse(cmd *flag.FlagSet, args []string) (*container.Config, *container.Host
 		flStopSignal        = cmd.String([]string{"-stop-signal"}, signal.DefaultStopSignal, fmt.Sprintf("Signal to stop a container, %v by default", signal.DefaultStopSignal))
 		flIsolation         = cmd.String([]string{"-isolation"}, "", "Container isolation technology")
 		flShmSize           = cmd.String([]string{"-shm-size"}, "", "Size of /dev/shm, default value is 64MB")
+
+		//modify by wenjia zhao
+		flDuneMode = cmd.Bool([]string{"-dune"}, false, "Run container with dune mode")
 	)
 
 	cmd.Var(&flAttach, []string{"a", "-attach"}, "Attach to STDIN, STDOUT or STDERR")
@@ -414,6 +417,7 @@ func Parse(cmd *flag.FlagSet, args []string) (*container.Config, *container.Host
 		ShmSize:        shmSize,
 		Resources:      resources,
 		Tmpfs:          tmpfs,
+		DuneMode:       *flDuneMode,
 	}
 
 	// When allocating stdin in attached mode, close stdin at client disconnect
